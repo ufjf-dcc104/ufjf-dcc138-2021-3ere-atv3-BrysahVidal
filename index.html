@@ -1,64 +1,74 @@
 <!DOCTYPE html>
 <html lang="pt">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Zangief</title>
-</head>
-<body>
+  </head>
+  <body>
     <h1>Zangief</h1>
     <canvas></canvas>
     <script>
+      const canvas = document.querySelector("canvas");
+      const ctx = canvas.getContext("2d");
+      const zangief = new Image();
+      zangief.src = "assets/zangief.png";
 
-        const canvas = document.querySelector("canvas");
-        const ctx = canvas.getContext("2d");
-        const zangief = new Image();
-        zangief.src="assets/zangief.png";
+      function desenhaFundo() {
+        ctx.fillStyle = "lightgreen";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+      }
 
-        function desenhaFundo() {
-            ctx.fillStyle = "lightgreen";
-        ctx.fillRect(0,0,canvas.width,canvas.height);
+      let pose = 0; //l
+      let quadro = 0; //c
+      const POSES = [
+        { qmax: 4, pv: 7 },
+        { qmax: 5, pv: 8 },
+        { qmax: 7, pv: 8 },
+      ];
+      let t0;
+      let dt;
+      let estado = ["Parado(Idle)", "Socos", "Poder Especial"];
+
+      requestAnimationFrame(passo);
+      function passo(t) {
+        t0 = t0 ?? t;
+        dt = (t - t0) / 1000;
+        desenhaFundo();
+
+        if (quadro >= POSES[pose].qmax - 1) {
+          quadro = 0;
+          if (pose == 2) {
+            pose = 0;
+          } else {
+            pose++;
+          }
+        } else {
+          quadro = quadro + POSES[pose].pv * dt;
         }
 
- 
-        
-        let pose = 0; //l
-        let quadro= 0; //c
-        const POSES = [
-        {qmax: 4,pv: 7},
-        {qmax: 5,pv: 8},
-        {qmax: 7,pv: 8}
-    ];
-        let t0;
-        let dt;
-        let estado = ["Parado(Idle)", "Socos","Poder Especial"]
+        ctx.fillStyle = "black";
+        ctx.font = "20px Impact";
+        ctx.fillText(estado[pose], 0, 145);
+
+        ctx.drawImage(
+          zangief,
+          //sx,sy,sw,sh
+          Math.floor(quadro) * 131,
+          pose * 131,
+          131,
+          131,
+          //dx,dy,dw,dh
+          0,
+          0,
+          131,
+          131
+        );
 
         requestAnimationFrame(passo);
-        function passo(t) {
-            t0 = t0 ?? t;
-            dt = (t - t0 )/1000; 
-            desenhaFundo();
-
-            quadro = (quadro >= POSES[pose].qmax -1 ) ? 0 : quadro + POSES[pose].pv * dt;
-            
-            ctx.fillStyle = "black";
-            ctx.font = "20px Impact";
-            ctx.fillText(estado[pose],0,145);
-
-            ctx.drawImage(zangief,
-            //sx,sy,sw,sh
-            Math.floor(quadro)*131,pose * 131,131,131,
-            //dx,dy,dw,dh
-            0,0,131,131
-            );
-
-
-
-
-            requestAnimationFrame(passo);
-            t0 = t;
-        }
+        t0 = t;
+      }
     </script>
-</body>
+  </body>
 </html>
