@@ -32,6 +32,7 @@
     ];
         let t0;
         let dt;
+        let estado = ["Parado(Idle)", "Socos","Poder Especial"]
 
         requestAnimationFrame(passo);
         function passo(t) {
@@ -41,6 +42,9 @@
 
             quadro = (quadro >= POSES[pose].qmax -1 ) ? 0 : quadro + POSES[pose].pv * dt;
             
+            ctx.fillStyle = "black";
+            ctx.font = "20px Impact";
+            ctx.fillText(estado[pose],0,145);
 
             ctx.drawImage(zangief,
             //sx,sy,sw,sh
