@@ -4,31 +4,24 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Exemplo 02</title>
+    <title>Zangief</title>
 </head>
 <body>
-    <h1>Exemplo 02</h1>
+    <h1>Zangief</h1>
     <canvas></canvas>
     <script>
 
         const canvas = document.querySelector("canvas");
         const ctx = canvas.getContext("2d");
-        const baby = new Image();
-        baby.src="assets/baby.png";
-        baby.addEventListener("load",terminouDeCarregar);
+        const zangief = new Image();
+        zangief.src="assets/zangief.png";
+
         function desenhaFundo() {
             ctx.fillStyle = "lightgreen";
         ctx.fillRect(0,0,canvas.width,canvas.height);
         }
 
-        
-        
-        function terminouDeCarregar() {           
-           
-        }
-        
-        let l = 1;
-        let c = 1;
+ 
         
         let pose = 0; //l
         let quadro= 0; //c
@@ -47,11 +40,11 @@
             quadro = (quadro >= POSES[pose].qmax -1 ) ? 0 : quadro + POSES[pose].pv * dt;
             
 
-            ctx.drawImage(baby,
+            ctx.drawImage(zangief,
             //sx,sy,sw,sh
-            Math.floor(quadro)*64,pose * 64,64,64,
+            Math.floor(quadro)*131,pose * 131,131,131,
             //dx,dy,dw,dh
-            0,0,64,64
+            0,0,131,131
             );
 
 
