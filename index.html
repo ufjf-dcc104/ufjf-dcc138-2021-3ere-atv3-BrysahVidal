@@ -30,6 +30,7 @@
       let t0;
       let dt;
       let estado = ["Parado(Idle)", "Socos", "Poder Especial"];
+      let repeticao = 0;
 
       requestAnimationFrame(passo);
       function passo(t) {
@@ -37,16 +38,24 @@
         dt = (t - t0) / 1000;
         desenhaFundo();
 
-        if (quadro >= POSES[pose].qmax - 1) {
-          quadro = 0;
-          if (pose == 2) {
-            pose = 0;
-          } else {
-            pose++;
-          }
-        } else {
-          quadro = quadro + POSES[pose].pv * dt;
-        }
+        if(quadro >= POSES[pose].qmax -1)
+            {
+                repeticao++;
+                quadro = 0;
+                if(repeticao % 3 == 0)
+                {
+                    if(pose == 2)
+                    {
+                        pose =0;
+                    }
+                    else{
+                        pose++;
+                    }
+                }
+            }
+            else{
+                quadro =  quadro + POSES[pose].pv * dt;
+            }
 
         ctx.fillStyle = "black";
         ctx.font = "20px Impact";
